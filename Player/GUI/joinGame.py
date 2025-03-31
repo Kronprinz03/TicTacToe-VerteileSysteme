@@ -14,7 +14,7 @@ class JoinGame:
         self.refresh_button.config(state='disabled')
 
     def refresh_games(self):
-        self.active_games = self.localNetworkHandler.findActiveGame(2)
+        self.active_games = self.localNetworkHandler.find_active_games(2)
         self.draw_game_buttons()
 
     def draw(self, master, goBackCallback):
@@ -49,7 +49,7 @@ class JoinGame:
         self.draw(self.master, self.goBackCallback)
 
     def join_game(self, ip, port):
-        self.localNetworkHandler.socketTcpJoinGame(ip,port)
+        self.localNetworkHandler.join_game(ip,port)
         self.top_frame.pack_forget()
         self.game_list_frame.pack_forget()
         self.playboard.draw(self.master,self.backFunction, "Enemys Turn")

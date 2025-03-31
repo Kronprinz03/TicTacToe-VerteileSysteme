@@ -2,12 +2,12 @@ from tkinter import *
 from tkinter import messagebox
 
 class PlayboardGUI():
-    def __init__(self, findGamesHandler, gameLogic):
-        self.findGamesHandler = findGamesHandler
+    def __init__(self, local_network_interface, gameLogic):
+        self.local_network_interface = local_network_interface
         self.gameLogic = gameLogic
-        findGamesHandler.setDynamicTextFuction(self.changeDynamicText)
-        findGamesHandler.setAllButtonsPossibleActive(self.activateAllPossibleButtons)
-        findGamesHandler.setChangeButtonFunction(self.changeButton)
+        self.local_network_interface.get_needed_functions(self.changeDynamicText, 
+                                                          self.activateAllPossibleButtons, 
+                                                          self.changeButton) 
 
     def draw(self, master, goBackCallback, userInfoText,):
         self.goBackCallback = goBackCallback
@@ -42,9 +42,9 @@ class PlayboardGUI():
         self.playBoard_frame, text=userInfoText, font=('Arial', 24))
         self.status_label.pack(pady=10, anchor=N)
         self.isGameRunning = True
-
+ 
     def waitForEnemy(self):
-        self.findGamesHandler.broadcastingGame()
+        self.local_network_interface.createGame()
     
     def activateAllPossibleButtons(self):
         if(self.isGameRunning == True):
@@ -67,7 +67,7 @@ class PlayboardGUI():
 
     def on_back(self):
         print("return")
-        self.findGamesHandler.stopBroadCastSocket()
+        self.local_network_interface.stop_broadcast_socket()
         self.playBoard_frame.pack_forget()
         self.back_button_frame.pack_forget()
         self.goBackCallback()
@@ -78,7 +78,7 @@ class PlayboardGUI():
                 button.config(state='disabled')
         clickedButton = self.buttons[row][col]
         clickedButton.config(text='X')
-        self.findGamesHandler.playmove(row,col)
+        self.local_network_interface.playmove(row,col)
         self.changeDynamicText("Enemys Turn")
         self.handleGameLogic()
         
@@ -102,4 +102,4 @@ class PlayboardGUI():
         else:
             self.changeDynamicText("Draw")
         self.isGameRunning = False
-        self.findGamesHandler.close_tcp_socket()
+        self.local_network_interface.close_tcp_socket()
