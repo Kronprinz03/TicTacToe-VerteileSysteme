@@ -1,6 +1,6 @@
 from tkinter import Tk, Button, Label, Frame, LEFT, BOTH, N
 
-class ConnectionGUI:
+class OnlineConnectionGUI:
     def __init__(self, playBoard, joinGame):
         self.playBoard = playBoard
         self.joinGame = joinGame
@@ -13,7 +13,7 @@ class ConnectionGUI:
         self.connection_frame = Frame(self.master)
         self.connection_frame.pack(expand=True, fill=BOTH)
 
-        title_label = Label(self.connection_frame, text="Choose Game", font=('Arial', 36))
+        title_label = Label(self.connection_frame, text="Online Suche", font=('Arial', 36))
         title_label.pack(pady=10, anchor=N)
 
         self.button_frame = Frame(self.connection_frame)

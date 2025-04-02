@@ -1,9 +1,8 @@
 
 import threading
 import tkinter as tk
-from tkinter import messagebox
 
-class JoinGame:
+class LocalJoinGame:
     def __init__(self, localNetworkHandler, playboard):
         self.localNetworkHandler = localNetworkHandler
         self.playboard = playboard

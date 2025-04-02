@@ -1,15 +1,15 @@
 import socket
 import threading
-
-
 class TCPController:
     
     def set_tcp_socket(self, socket):
         self.tcpSocket = socket
 
-    def tcp_socket_listen(self,stop_broadcast_socket, change_user_text,set_possible_all_buttons_active):        
+    def tcp_socket_listen(self):
         self.tcpSocket.listen()
         print("Socket listen")
+
+    def tcp_socket_accept(self,stop_broadcast_socket, change_user_text,set_possible_all_buttons_active):                
         self.connect, self.addr = self.tcpSocket.accept()
         print("Accepted incomming connect")
         stop_broadcast_socket()
@@ -31,7 +31,6 @@ class TCPController:
         move_str = str(move_tuple) 
         move_bytes = move_str.encode('utf-8') 
         self.connect.send(move_bytes)
-        print("send data")
 
     def recvmove(self, change_button_function):
         try:

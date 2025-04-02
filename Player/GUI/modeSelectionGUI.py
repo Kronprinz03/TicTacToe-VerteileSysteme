@@ -1,8 +1,9 @@
 from tkinter import Tk, Button, Label, Frame, LEFT, BOTH, N
 
 class ModeSelectionGUI:
-    def __init__(self, master, connectionGUI):
-        self.connectionGUI = connectionGUI
+    def __init__(self, master, local_connectionGUI, online_connectionGUI):
+        self.local_connectionGUI = local_connectionGUI
+        self.online_connectionGUI = online_connectionGUI
         self.master = master
 
 
@@ -26,14 +27,11 @@ class ModeSelectionGUI:
 
     def select_online(self):
         print("Online mode selected")
-        self.switch_to_connection_mode()
+        self.mode_frame.pack_forget()
+        self.online_connectionGUI.draw(self.master, self.draw) 
 
     def select_local(self):
         print("Local mode selected")
-        self.switch_to_connection_mode()
-
-    def switch_to_connection_mode(self):
         self.mode_frame.pack_forget()
-        self.connectionGUI.draw(self.master, self.draw)
-
+        self.local_connectionGUI.draw(self.master, self.draw)
     

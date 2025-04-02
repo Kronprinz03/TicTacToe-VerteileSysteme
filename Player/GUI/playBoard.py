@@ -2,10 +2,10 @@ from tkinter import *
 from tkinter import messagebox
 
 class PlayboardGUI():
-    def __init__(self, local_network_interface, gameLogic):
-        self.local_network_interface = local_network_interface
+    def __init__(self, network_interface, gameLogic):
+        self.network_interface = network_interface
         self.gameLogic = gameLogic
-        self.local_network_interface.get_needed_functions(self.changeDynamicText, 
+        self.network_interface.get_needed_functions(self.changeDynamicText, 
                                                           self.activateAllPossibleButtons, 
                                                           self.changeButton) 
 
@@ -44,7 +44,7 @@ class PlayboardGUI():
         self.isGameRunning = True
  
     def waitForEnemy(self):
-        self.local_network_interface.createGame()
+        self.network_interface.createGame()
     
     def activateAllPossibleButtons(self):
         if(self.isGameRunning == True):
@@ -67,7 +67,7 @@ class PlayboardGUI():
 
     def on_back(self):
         print("return")
-        self.local_network_interface.stop_broadcast_socket()
+        self.network_interface.stop_broadcast_socket()
         self.playBoard_frame.pack_forget()
         self.back_button_frame.pack_forget()
         self.goBackCallback()
@@ -78,7 +78,7 @@ class PlayboardGUI():
                 button.config(state='disabled')
         clickedButton = self.buttons[row][col]
         clickedButton.config(text='X')
-        self.local_network_interface.playmove(row,col)
+        self.network_interface.playmove(row,col)
         self.changeDynamicText("Enemys Turn")
         self.handleGameLogic()
         
@@ -87,7 +87,6 @@ class PlayboardGUI():
         for cord in cords:
             button = self.buttons[cord[0]][cord[1]]
             button.config(bg='lightblue', fg='white')
-            print('test')
             
     def handleGameLogic(self):
         winning_buttons_cords, isfinished, winner = self.gameLogic.check(self.buttons)
@@ -102,4 +101,4 @@ class PlayboardGUI():
         else:
             self.changeDynamicText("Draw")
         self.isGameRunning = False
-        self.local_network_interface.close_tcp_socket()
+        self.network_interface.close_tcp_socket()
